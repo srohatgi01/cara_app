@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cara_app">
+    package="com.sarthak.cara">
    <application
         android:label="Cara"
         android:icon="@mipmap/ic_launcher">

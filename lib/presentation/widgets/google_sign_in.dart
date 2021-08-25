@@ -9,15 +9,15 @@ class GoogleSignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 18,
-        vertical: 12,
+        horizontal: 30,
+        vertical: 10,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey,
-            offset: Offset(0.0, 1.0), //(x,y)
+            color: Colors.grey.shade400,
+            offset: Offset(0.3, 3.0), //(x,y)
             blurRadius: 6.0,
           )
         ],
@@ -27,14 +27,14 @@ class GoogleSignIn extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/google.png', height: 26),
+          Image.asset('assets/google.png', height: 32),
           SizedBox(
             width: 10,
           ),
           Text(
             'Sign In',
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -42,7 +42,7 @@ class GoogleSignIn extends StatelessWidget {
             '/',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 14,
               fontFamily: 'Gerogia',
             ),
           ),
@@ -50,7 +50,7 @@ class GoogleSignIn extends StatelessWidget {
             'Sign Up with Google',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 14,
             ),
           )
         ],
