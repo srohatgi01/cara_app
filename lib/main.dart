@@ -1,19 +1,26 @@
 import 'package:cara_app/constants/colors.dart';
-import 'package:cara_app/google_auth_screen.dart';
+import 'package:cara_app/data/config/prefs.dart';
+import 'package:cara_app/presentation/dashboard.dart';
+import 'package:cara_app/presentation/google_auth_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Cara',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: customMaterialColor, fontFamily: 'Nexa'),
-      home: GoogleAuthScreen(),
-    );
-  }
+  await Firebase.initializeApp();
+
+  bool? shouldShowAuth = false;
+
+  var prefs = await Prefs.init();
+
+  shouldShowAuth = await prefs.authScreenStatus();
+  await prefs.isSignedIn();
+
+  runApp(MaterialApp(
+    title: 'Cara',
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(primarySwatch: customMaterialColor, fontFamily: 'Nexa'),
+    home: shouldShowAuth == false ? Dashboard() : GoogleAuthScreen(),
+  ));
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "908439288493",
+    "project_id": "cara-90615",
+    "storage_bucket": "cara-90615.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908439288493:android:9adf12b28b83bdc6442424",
+        "android_client_info": {
+          "package_name": "com.sarthak.cara"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908439288493-32li8bsgci9kkkrs7bdf8ppkheomn09b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQSnb_xeHGhmubBlz3mey4VDSRaM6seU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908439288493-32li8bsgci9kkkrs7bdf8ppkheomn09b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
