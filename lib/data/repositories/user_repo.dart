@@ -41,7 +41,23 @@ class UserRepository {
 
     prefs.dontShowAuthScreen();
     prefs.signInUser();
+    await prefs.saveUserDetails(
+      emailAddress: user.emailAddress!,
+      firstName: user.firstName!,
+      lastName: user.lastName!,
+      phoneNumber: user.phoneNumber!,
+      zipCode: user.zipcode!,
+      photoUrl: user.photoUrl!,
+    );
 
     return user;
+  }
+
+  getUser() async {
+    var prefs = await Prefs.init();
+
+    CaraUser cuser = await prefs.getUserDetails();
+
+    return cuser;
   }
 }

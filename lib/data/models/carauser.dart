@@ -77,4 +77,20 @@ class CaraUser {
         phoneNumber: user.phoneNumber,
         photoUrl: user.photoUrl,
       );
+
+  factory CaraUser.fromPrefs({
+    required String emailAddress,
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+    required String zipCode,
+    required String photoUrl,
+  }) =>
+      CaraUser(
+        emailAddress: emailAddress,
+        firstName: firstName,
+        lastName: lastName,
+        zipcode: zipCode,
+        phoneNumber: phoneNumber,
+      );
 }

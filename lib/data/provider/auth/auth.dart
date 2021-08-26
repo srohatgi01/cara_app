@@ -74,6 +74,7 @@ class Auth {
     var prefs = await Prefs.init();
     prefs.logout();
     prefs.showAuthScreen();
+    prefs.deleteUserDetails();
     print("Sign Out Successfully");
   }
 

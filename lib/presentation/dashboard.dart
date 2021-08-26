@@ -1,6 +1,8 @@
 import 'package:cara_app/constants/colors.dart';
 import 'package:cara_app/data/config/prefs.dart';
+import 'package:cara_app/data/models/carauser.dart';
 import 'package:cara_app/data/provider/auth/auth.dart';
+import 'package:cara_app/data/repositories/user_repo.dart';
 import 'package:cara_app/presentation/google_auth_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +94,7 @@ class Screen1 extends StatefulWidget {
 
 class _Screen1State extends State<Screen1> {
   var isSignedIn;
+  CaraUser? cuser;
 
   prefsFunction() async {
     super.initState();
@@ -101,10 +104,15 @@ class _Screen1State extends State<Screen1> {
     setState(() {});
   }
 
+  getUser() async {
+    cuser = await UserRepository().getUser();
+  }
+
   @override
   void initState() {
     super.initState();
     prefsFunction();
+    getUser();
   }
 
   @override
@@ -124,17 +132,23 @@ class _Screen1State extends State<Screen1> {
         ),
       ),
       body: isSignedIn == true
-          ? Center(
-              child: ElevatedButton(
-                child: Text('Logout'),
-                onPressed: () async {
-                  await Auth().signOut();
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GoogleAuthScreen()));
-                },
-              ),
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(cuser!.firstName!),
+                Center(
+                  child: ElevatedButton(
+                    child: Text('Logout'),
+                    onPressed: () async {
+                      await Auth().signOut();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GoogleAuthScreen()));
+                    },
+                  ),
+                ),
+              ],
             )
           : Center(
               child: ElevatedButton(
