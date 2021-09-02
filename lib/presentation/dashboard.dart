@@ -1,10 +1,7 @@
 import 'package:cara_app/constants/colors.dart';
-import 'package:cara_app/data/config/prefs.dart';
-import 'package:cara_app/data/models/carauser.dart';
-import 'package:cara_app/data/provider/auth/auth.dart';
-import 'package:cara_app/data/repositories/user_repo.dart';
-import 'package:cara_app/presentation/google_auth_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cara_app/presentation/dashboard/cart.dart';
+import 'package:cara_app/presentation/dashboard/homepage.dart';
+import 'package:cara_app/presentation/dashboard/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -20,9 +17,9 @@ class _DashboardState extends State<Dashboard> {
 
   // List of all the nav items
   static const List<Widget> _widgetOptions = <Widget>[
-    Screen1(),
-    Screen2(),
-    Screen3()
+    HomePageScreen(),
+    CartPageScreen(),
+    ProfilePageScreen()
   ];
 
   @override
@@ -80,112 +77,6 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class Screen1 extends StatefulWidget {
-  const Screen1({Key? key}) : super(key: key);
-
-  @override
-  _Screen1State createState() => _Screen1State();
-}
-
-class _Screen1State extends State<Screen1> {
-  var isSignedIn;
-  CaraUser? cuser;
-
-  prefsFunction() async {
-    super.initState();
-    var prefs = await Prefs.init();
-
-    isSignedIn = await prefs.isSignedIn();
-    setState(() {});
-  }
-
-  getUser() async {
-    cuser = await UserRepository().getUser();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    prefsFunction();
-    getUser();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(backgroundColor),
-      appBar: AppBar(
-        backgroundColor: Color(backgroundColor),
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'Cara',
-          style: TextStyle(
-              fontFamily: 'Signatra',
-              fontSize: 45,
-              color: Theme.of(context).primaryColor),
-        ),
-      ),
-      body: isSignedIn == true
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(cuser!.firstName!),
-                Center(
-                  child: ElevatedButton(
-                    child: Text('Logout'),
-                    onPressed: () async {
-                      await Auth().signOut();
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GoogleAuthScreen()));
-                    },
-                  ),
-                ),
-              ],
-            )
-          : Center(
-              child: ElevatedButton(
-                child: Text('Proceed to Sign In'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => GoogleAuthScreen()));
-                },
-              ),
-            ),
-    );
-  }
-}
-
-class Screen2 extends StatelessWidget {
-  const Screen2({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Screen2'),
-      ),
-    );
-  }
-}
-
-class Screen3 extends StatelessWidget {
-  const Screen3({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Screen3'),
       ),
     );
   }

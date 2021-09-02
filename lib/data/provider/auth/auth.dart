@@ -39,43 +39,8 @@ class Auth {
     }
   }
 
-  // isNewUser(String emailAddress) async {
-  //   Response response = await UserApi().fetchUser(emailAddress: emailAddress);
-
-  //   if (response.statusCode == 404) {
-  //     return true;
-  //   } else if (response.statusCode == 200) {
-  //     CustomUser.User user = CustomUser.User.fromRawJson(response.body);
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     prefs.setString('gender', user.gender!);
-  //     prefs.setString('phoneNumber', user.phoneNumber!);
-
-  //     return user;
-  //   }
-  // }
-
-  // createUserInDatabase(String json) async {
-  //   var createdUser = await UserApi().createUser(json: json);
-
-  //   print("User created");
-
-  //   CustomUser.User user = CustomUser.User.fromRawJson(createdUser.body);
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('gender', user.gender!);
-  //   prefs.setString('phoneNumber', user.phoneNumber!);
-
-  //   return user;
-  // }
-
   signOut() async {
     await googleSignIn.signOut();
-
-    // Update shared Prefences
-    var prefs = await Prefs.init();
-    prefs.logout();
-    prefs.showAuthScreen();
-    prefs.deleteUserDetails();
-    print("Sign Out Successfully");
   }
 
   // disconnect() async {
