@@ -11,44 +11,36 @@ class UserRepository {
     // Sign In with Google Auth and returns a User object with all the details from Google User object.
     User user = await Auth().signIn();
 
+    //Created GUser form the Google User object and took out the necessary things from it.
     GUser guser = GUser.fromGoogleUser(user: user);
 
+    // Passed email Id from GUser to the fetch function which will return either user exists or not
     dynamic response = await UserApi().fetchUser(emailAddress: guser.email);
-
+    print(response.toString());
     if (response == 404) {
+      //if user does not exists in database then pass the guser to the UI
       return guser;
     } else if (response is http.Response) {
-      CaraUser user = CaraUser.fromRawJson(response.body);
+      // if user exists in the database then it will pass the user response and parse it in CaraUser type
+      CaraUser cuser = CaraUser.fromRawJson(response.body);
 
-      // Update shared prefences
-      var prefs = await Prefs.init();
-
-      prefs.dontShowAuthScreen();
-      prefs.signInUser();
-
-      return user;
+      return cuser;
     }
   }
 
   postUser({required CaraUser cuser}) async {
+    //take complete cara user and post it on the database
     String body = cuser.toRawJson();
     var response = await UserApi().postUser(body: body);
-
+    // parse the user again to return it back to the UI
     CaraUser user = CaraUser.fromRawJson(response.body);
 
-    // Update shared prefences
+    // Now initialize prefs to don't show auth screen, sign in user and save the data in local storage.
     var prefs = await Prefs.init();
 
-    prefs.dontShowAuthScreen();
-    prefs.signInUser();
-    await prefs.saveUserDetails(
-      emailAddress: user.emailAddress!,
-      firstName: user.firstName!,
-      lastName: user.lastName!,
-      phoneNumber: user.phoneNumber!,
-      zipCode: user.zipcode!,
-      photoUrl: user.photoUrl!,
-    );
+    // prefs.dontShowAuthScreen();
+    // prefs.signInUser();
+    await prefs.saveUserDetails(cuser: user);
 
     return user;
   }
@@ -59,5 +51,15 @@ class UserRepository {
     CaraUser cuser = await prefs.getUserDetails();
 
     return cuser;
+  }
+
+  logoutUser() async {
+    await Auth().signOut();
+    // Update shared Prefences
+    var prefs = await Prefs.init();
+    // prefs.logout();
+    // prefs.showAuthScreen();
+    prefs.deleteUserDetails();
+    print("Sign Out Successfully");
   }
 }

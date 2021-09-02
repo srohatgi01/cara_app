@@ -16,6 +16,26 @@ class Prefs {
     return _instance!;
   }
 
+  initialCheck() async {
+    try {
+      if (_sharedPreferences!.containsKey('isSignedIn') == false &&
+          _sharedPreferences!.containsKey('shouldShowAuth') == false) {
+        await authStatus(isSignedIn: false, shouldShowAuth: true);
+      }
+    } catch (e) {
+      print('$e');
+    }
+  }
+
+  authStatus({required bool isSignedIn, required bool shouldShowAuth}) async {
+    try {
+      await _sharedPreferences!.setBool('isSignedIn', isSignedIn);
+      await _sharedPreferences!.setBool('shouldShowAuth', shouldShowAuth);
+    } catch (e) {
+      print('$e');
+    }
+  }
+
   isSignedIn() async {
     try {
       var signedIn;
@@ -27,7 +47,7 @@ class Prefs {
     }
   }
 
-  authScreenStatus() async {
+  shouldShowAuth() async {
     try {
       var authScreenStatus;
       authScreenStatus = _sharedPreferences!.getBool('shouldShowAuth');
@@ -38,53 +58,16 @@ class Prefs {
     }
   }
 
-  dontShowAuthScreen() async {
+  saveUserDetails({required CaraUser cuser}) async {
     try {
-      _sharedPreferences!.setBool('shouldShowAuth', false);
-    } catch (e) {
-      print('Error in setting shouldShowSuth as false = $e');
-    }
-  }
-
-  showAuthScreen() async {
-    try {
-      _sharedPreferences!.setBool('shouldShowAuth', true);
-    } catch (e) {
-      print('Error setting shouldShowSuth as true = $e');
-    }
-  }
-
-  signInUser() async {
-    try {
-      await _sharedPreferences!.setBool('isSignedIn', true);
-    } catch (e) {
-      print('Error making the key, isSignedIn = $e');
-    }
-  }
-
-  logout() async {
-    try {
-      await _sharedPreferences!.setBool('isSignedIn', false);
-    } catch (e) {
-      print('Error in logging out user');
-    }
-  }
-
-  saveUserDetails({
-    required String emailAddress,
-    required String firstName,
-    required String lastName,
-    required String phoneNumber,
-    required String zipCode,
-    required String photoUrl,
-  }) async {
-    try {
-      await _sharedPreferences!.setString('emailAddress', '$emailAddress');
-      await _sharedPreferences!.setString('firstName', '$firstName');
-      await _sharedPreferences!.setString('lastName', '$lastName');
-      await _sharedPreferences!.setString('phoneNumber', '$phoneNumber');
-      await _sharedPreferences!.setString('zipCode', '$zipCode');
-      await _sharedPreferences!.setString('photoUrl', '$photoUrl');
+      await _sharedPreferences!
+          .setString('emailAddress', '${cuser.emailAddress}');
+      await _sharedPreferences!.setString('firstName', '${cuser.firstName}');
+      await _sharedPreferences!.setString('lastName', '${cuser.lastName}');
+      await _sharedPreferences!
+          .setString('phoneNumber', '${cuser.phoneNumber}');
+      await _sharedPreferences!.setString('zipCode', '${cuser.zipcode}');
+      await _sharedPreferences!.setString('photoUrl', '${cuser.photoUrl}');
     } catch (e) {
       print('Error in setting user data');
     }
@@ -96,7 +79,8 @@ class Prefs {
       var firstName = _sharedPreferences!.getString('firstName');
       var lastName = _sharedPreferences!.getString('lastName');
       var phoneNumber = _sharedPreferences!.getString('phoneNumber');
-      var zipCode = _sharedPreferences!.getString('zipCode');
+      // Return the default zipcode of bhopal if user is not signed in.
+      var zipCode = _sharedPreferences!.getString('zipCode') ?? '462000';
       var photoUrl = _sharedPreferences!.getString('photoUrl');
 
       return CaraUser(

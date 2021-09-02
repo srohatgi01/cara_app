@@ -1,0 +1,5 @@
+List of all the TODOS in the app:
+
+- Instead of using stream builder everywhere try to manage the state of whole app with provider 
+- When user search something and then changes the tab and returns to the same tab, the searchprovider
+  don't work expectedly.

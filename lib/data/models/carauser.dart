@@ -25,7 +25,7 @@ class CaraUser {
   final String? firstName;
   final String? lastName;
   final String? gender;
-  final String? zipcode;
+  String? zipcode;
   final String? phoneNumber;
   final String? photoUrl;
   final String? dateOfBirth;
@@ -74,6 +74,7 @@ class CaraUser {
         firstName: user.firstName,
         lastName: user.lastName,
         zipcode: '462000',
+        //TODO: shouldn't send default zipcode from here.
         phoneNumber: user.phoneNumber,
         photoUrl: user.photoUrl,
       );
@@ -93,4 +94,8 @@ class CaraUser {
         zipcode: zipCode,
         phoneNumber: phoneNumber,
       );
+
+  set zip(String zipCode) {
+    this.zipcode = zipCode;
+  }
 }
