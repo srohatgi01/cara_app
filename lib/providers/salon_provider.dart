@@ -4,9 +4,11 @@ import 'package:flutter/cupertino.dart';
 class SalonProvider with ChangeNotifier {
   var _salonId;
   List<Service> _services = [];
+  int _subtotal = 0;
 
   get getSalonId => _salonId;
   get getServices => _services;
+  get subtotal => _subtotal;
 
   set setSalonId(var salonId) {
     _salonId = salonId;
@@ -23,6 +25,7 @@ class SalonProvider with ChangeNotifier {
   addToCart({required Service service}) {
     if (!_services.contains(service)) {
       _services.add(service);
+      _subtotal += int.parse(service.servicePrice!);
       print(service.serviceName);
       notifyListeners();
     }
@@ -31,7 +34,13 @@ class SalonProvider with ChangeNotifier {
   removeFromCart({required Service service}) {
     if (_services.contains(service)) {
       _services.remove(service);
+      _subtotal -= int.parse(service.servicePrice!);
       notifyListeners();
     }
+  }
+
+  emptyCart() {
+    _services.clear();
+    notifyListeners();
   }
 }
