@@ -41,6 +41,8 @@ class SalonProvider with ChangeNotifier {
 
   emptyCart() {
     _services.clear();
+    _subtotal = 0;
+    _salonId = null;
     notifyListeners();
   }
 }

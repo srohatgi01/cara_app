@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 class AppointmentProvider with ChangeNotifier {
   var _date;
   late int? _numberofChairs;
-  var _selectedNumberOfChair;
+  int? _selectedNumberOfChair;
   bool _isChairSelected = false;
+  var _selectedSlotId = 'no slot selected';
 
   AppointmentProvider({required numberOfChairs}) {
     this._numberofChairs = numberOfChairs;
@@ -15,14 +16,20 @@ class AppointmentProvider with ChangeNotifier {
   get getNumberOfChairs => _numberofChairs;
   get getSelectedNumberOfChair => _selectedNumberOfChair;
   get getIsChairSelected => _isChairSelected;
+  get getSelectedSlotId => _selectedSlotId;
+
+  set setSlotId(var slotId) {
+    _selectedSlotId = slotId;
+    notifyListeners();
+  }
 
   set setDate(String date) {
     _date = date;
     notifyListeners();
   }
 
-  set setSelectedNumberOfChair(int number) {
-    _selectedNumberOfChair = number + 1;
+  set setSelectedNumberOfChair(int? number) {
+    number != null ? _selectedNumberOfChair = number + 1 : _selectedNumberOfChair = null;
     _isChairSelected = true;
     notifyListeners();
   }

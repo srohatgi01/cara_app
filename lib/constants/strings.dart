@@ -12,3 +12,4 @@ const String recommendedSalonsUrl = baseUrl + '/recommendations/salons/';
 const String searchSalonsUrl = baseUrl + '/search/salons/';
 const String getSalonByIdUrl = baseUrl + '/salons/';
 const String getSlotsUrl = baseUrl + '/appointments/slots/';
+const String bookAppointmentUrl = baseUrl + '/appointments/';
