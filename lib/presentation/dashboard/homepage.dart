@@ -102,10 +102,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 List<UpperBanner> banners = snapshot.data as List<UpperBanner>;
                                 return CarouselSlider.builder(
                                   itemCount: banners.length,
-                                  itemBuilder: (context, index, ind) => ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: Image.network(
-                                      banners[index].bannerUrl!,
+                                  itemBuilder: (context, index, ind) => GestureDetector(
+                                    onTap: () {
+                                      Provider.of<SalonProvider>(
+                                        context,
+                                        listen: false,
+                                      ).setSalonId = banners[index].salonId;
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SalonScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(16),
+                                      child: Image.network(
+                                        banners[index].bannerUrl!,
+                                      ),
                                     ),
                                   ),
                                   options: CarouselOptions(
