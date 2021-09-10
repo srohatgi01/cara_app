@@ -1,3 +1,4 @@
+import 'package:cara_app/data/models/appointment/appointment_history.dart';
 import 'package:cara_app/data/models/appointment/bookappointment.dart';
 import 'package:cara_app/data/models/salon/service.dart';
 import 'package:cara_app/data/models/slot.dart';
@@ -53,5 +54,20 @@ class AppointmentRepo {
     if (response is String) {
       return response;
     }
+  }
+
+  appointmentHistory({required String emailAddress}) async {
+    var decodedResponse = await _appointmentApi.appointmentHistory(emailAddress: emailAddress);
+
+    List<AppointmentHistory> appointments = [];
+
+    if (decodedResponse.length > 0) {
+      for (var appointment in decodedResponse) {
+        appointments.add(AppointmentHistory.fromJson(appointment));
+      }
+
+      return appointments;
+    } else
+      return appointments;
   }
 }

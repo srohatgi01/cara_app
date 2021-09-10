@@ -1,4 +1,12 @@
+import 'package:cara_app/constants/colors.dart';
+import 'package:cara_app/data/models/appointment/appointment_history.dart';
+import 'package:cara_app/data/repositories/appointment_repo.dart';
+import 'package:cara_app/presentation/authentication/google_auth_screen.dart';
+import 'package:cara_app/presentation/widgets/common_app_bar.dart';
+import 'package:cara_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class CartPageScreen extends StatelessWidget {
   const CartPageScreen({Key? key}) : super(key: key);
@@ -6,9 +14,69 @@ class CartPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Screen2'),
-      ),
+      backgroundColor: Color(backgroundColor),
+      appBar: commonAppBar(context),
+      body: Provider.of<UserProvider>(context).isSignedIn == false
+          ? Center(
+              child: Builder(
+                builder: (context) => AlertDialog(
+                  title: Text('Looks like you are not Signed In'),
+                  content: Text('Click below to Sign In and view your Order history.'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(builder: (context) => GoogleAuthScreen()));
+                        },
+                        child: Text('Sign In')),
+                  ],
+                ),
+              ),
+            )
+          : FutureBuilder(
+              future: AppointmentRepo().appointmentHistory(
+                emailAddress: Provider.of<UserProvider>(context, listen: false).cuser.emailAddress,
+              ),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                  List<AppointmentHistory> appointments = snapshot.data as List<AppointmentHistory>;
+                  return appointments.length > 0 ? appointmentsList(appointments) : emptyCart(context);
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return Text('Oops something went wrong.');
+                }
+              },
+            ),
     );
   }
+
+  ListView appointmentsList(List<AppointmentHistory> appointments) => ListView.builder(
+      physics: BouncingScrollPhysics(),
+      itemCount: appointments.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) => ListTile(
+            title: Text(appointments[index].appointmentId.toString()),
+            subtitle: Text(appointments[index].appointmentStatus.toString()),
+            trailing: Text('₹' + appointments[index].totalPrice.toString()),
+          ));
+
+  Column emptyCart(context) => Column(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 50),
+            child: SvgPicture.asset(
+              'assets/svg/empty-cart.svg',
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'Looks like you haven\'t booked any appointments, go back and make yourself fashionable.',
+              textAlign: TextAlign.center,
+            ),
+          )
+        ],
+      );
 }

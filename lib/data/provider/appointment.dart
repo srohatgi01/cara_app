@@ -41,4 +41,16 @@ class AppointmentApi {
       print(e);
     }
   }
+
+  appointmentHistory({required String emailAddress}) async {
+    try {
+      var response = await http.get(Uri.parse(getUserAppointmentsUrl + emailAddress));
+
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
