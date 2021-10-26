@@ -47,7 +47,7 @@ class AppointmentApi {
       var response = await http.get(Uri.parse(getUserAppointmentsUrl + emailAddress));
 
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        return response;
       }
     } catch (e) {
       print(e);

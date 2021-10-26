@@ -154,7 +154,3 @@ class _SalonScreenState extends State<SalonScreen> {
     );
   }
 }
-
-
-// TODO: Check if the user is signed in and only then give user the access to go to the cart other wise just give a popup asking to sign in
-//TODO: empty the cart when user exists the salon page

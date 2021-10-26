@@ -16,11 +16,7 @@ class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
 
   // List of all the nav items
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomePageScreen(),
-    CartPageScreen(),
-    ProfilePageScreen()
-  ];
+  static const List<Widget> _widgetOptions = <Widget>[HomePageScreen(), CartPageScreen(), ProfilePageScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +41,7 @@ class _DashboardState extends State<Dashboard> {
                 Theme.of(context).primaryColor.withOpacity(.1),
                 Theme.of(context).primaryColor.withOpacity(.1)
               ]),
+              textStyle: TextStyle(fontFamily: 'NexaBold', color: Theme.of(context).primaryColor),
               haptic: false,
               hoverColor: Colors.grey[100]!,
               gap: 8,
@@ -64,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
                   text: 'Orders',
                 ),
                 GButton(
-                  icon: LineIcons.personEnteringBooth,
+                  icon: Icons.person_outline,
                   text: 'Profile',
                 ),
               ],

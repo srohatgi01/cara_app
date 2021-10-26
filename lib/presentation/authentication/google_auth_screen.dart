@@ -50,10 +50,8 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
                           alignment: Alignment.center,
                           child: Text(
                             appName,
-                            style: TextStyle(
-                                fontFamily: 'Signatra',
-                                fontSize: 120,
-                                color: Theme.of(context).primaryColor),
+                            style:
+                                TextStyle(fontFamily: 'Signatra', fontSize: 120, color: Theme.of(context).primaryColor),
                           ),
                         ),
                       ),
@@ -111,12 +109,10 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
                   ));
             } else if (response is CaraUser) {
               //Providing the user to the function
-              UserProvider userProvider =
-                  Provider.of<UserProvider>(context, listen: false);
+              UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
 
               userProvider.setUser(response);
-              userProvider.changeUserAuthStatus(
-                  isSignedIn: true, shouldShowAuth: false);
+              userProvider.changeUserAuthStatus(isSignedIn: true, shouldShowAuth: false);
 
               Navigator.pushReplacement(
                 context,
@@ -134,24 +130,27 @@ class _GoogleAuthScreenState extends State<GoogleAuthScreen> {
           children: [
             Text(
               'or',
-              style: TextStyle(fontSize: 13),
+              style: TextStyle(
+                fontSize: 13,
+                fontFamily: 'NexaBoldDemo',
+              ),
             ),
             SizedBox(width: 5),
             GestureDetector(
               onTap: () {
                 // signInlater(context: context);
                 Provider.of<UserProvider>(context, listen: false)
-                    .changeUserAuthStatus(
-                        isSignedIn: false, shouldShowAuth: false);
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Dashboard()));
+                    .changeUserAuthStatus(isSignedIn: false, shouldShowAuth: false);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
               },
               child: Text(
                 'Sign In later',
                 style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13),
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'NexaBoldDemo',
+                  fontSize: 13,
+                ),
               ),
             ),
           ],

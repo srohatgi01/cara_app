@@ -36,6 +36,7 @@ class GoogleSignIn extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
+              fontFamily: 'NexaBoldDemo',
             ),
           ),
           Text(
@@ -51,6 +52,7 @@ class GoogleSignIn extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 14,
+              fontFamily: 'NexaBoldDemo',
             ),
           )
         ],

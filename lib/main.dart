@@ -27,13 +27,6 @@ Future<void> main() async {
       ],
       child: CaraApp(),
     ),
-    // ChangeNotifierProvider(
-    //   create: (context) => UserProvider(),
-    //   child: ChangeNotifierProvider(
-    //     create: (context) => SearchProvider(),
-    //     child: CaraApp(),
-    //   ),
-    // ),
   );
 }
 
@@ -46,10 +39,8 @@ class CaraApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cara',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: customMaterialColor, fontFamily: 'Nexa'),
-      home: userProvider.shouldShowAuth == false
-          ? Dashboard()
-          : GoogleAuthScreen(),
+      theme: ThemeData(primarySwatch: customMaterialColor, fontFamily: 'NexaBoldDemo'),
+      home: userProvider.shouldShowAuth == false ? Dashboard() : GoogleAuthScreen(),
     );
   }
 }

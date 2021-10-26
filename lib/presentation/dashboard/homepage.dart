@@ -11,6 +11,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cara_app/presentation/widgets/homeappbar.dart';
 import 'package:cara_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -35,22 +37,59 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(height: 10),
                 Text(
                   'Hello ' + (userProvider.isSignedIn == true ? userProvider.cuser.firstName : 'User') + ',',
+                  style: TextStyle(
+                    fontFamily: 'RalewaySemiBold',
+                    fontSize: 18,
+                  ),
                 ),
-                Text('Welcome back!'),
-                TextFormField(
-                  autofocus: false,
-                  onChanged: (value) {
-                    print(value);
-                    Provider.of<SearchProvider>(context, listen: false).setKeyword = value;
-                  },
+                SizedBox(height: 0),
+                Text(
+                  'Welcome back!',
+                  style: TextStyle(
+                    fontFamily: 'NexaBoldDemo',
+                    fontSize: 26,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(6),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade400,
+                        offset: Offset(0.3, 2.0), //(x,y)
+                        blurRadius: 6.0,
+                      )
+                    ],
+                  ),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: Icon(
+                        LineIcons.search,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      alignLabelWithHint: true,
+                      hintText: 'Search',
+                    ),
+                    autofocus: false,
+                    onChanged: (value) {
+                      print(value);
+                      Provider.of<SearchProvider>(context, listen: false).setKeyword = value;
+                    },
+                  ),
                 ),
                 StreamBuilder(
                   stream: (Provider.of<SearchProvider>(context).getKeyword != null &&
@@ -95,7 +134,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Sponsored'),
+                          SizedBox(height: 18),
+                          Text(
+                            'Sponsored',
+                            style: TextStyle(fontFamily: 'NexaBoldDemo', fontSize: 16),
+                          ),
+                          SizedBox(height: 5),
                           StreamBuilder(
                             builder: (context, snapshot) {
                               if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
@@ -132,7 +176,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 );
                               } else if (snapshot.connectionState == ConnectionState.waiting) {
                                 return Container(
-                                  height: 300,
+                                  height: 200,
                                   alignment: Alignment.center,
                                   child: CircularProgressIndicator(),
                                 );
@@ -144,7 +188,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               UpperBannerRepo().fetchUpperBanner(zipCode: userProvider.cuser.zipcode),
                             ),
                           ),
-                          Text('Recommended Salons'),
+                          SizedBox(height: 12),
+                          Text(
+                            'Recommended Salons',
+                            style: TextStyle(fontFamily: 'NexaBoldDemo', fontSize: 16),
+                          ),
                           StreamBuilder(
                             stream: Stream.fromFuture(
                               SalonsRepo().recommendedSalons(zipCode: userProvider.cuser.zipcode),
@@ -156,7 +204,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     shrinkWrap: true,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: salons.length,
-                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2, childAspectRatio: .86),
                                     itemBuilder: (context, index) => GestureDetector(
                                           onTap: () {
                                             Provider.of<SalonProvider>(
@@ -171,17 +220,107 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                               ),
                                             );
                                           },
-                                          child: Column(
-                                            children: [
-                                              // Image.network(salons[index].logo!),
-                                              Text(salons[index].salonName!),
-                                              Text(salons[index].average!),
-                                            ],
+                                          child: Container(
+                                            margin: EdgeInsets.all(13),
+                                            decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey.shade400,
+                                                  offset: Offset(0.3, 2.0), //(x,y)
+                                                  blurRadius: 6.0,
+                                                )
+                                              ],
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(25),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    children: [
+                                                      Container(
+                                                        margin: EdgeInsets.symmetric(horizontal: 30),
+                                                        child: salons[index].logo != null
+                                                            ? Image.network(salons[index].logo!)
+                                                            : Image.asset('assets/smaple_salon_logo.png'),
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                        children: [
+                                                          Text(
+                                                            salons[index].salonName!,
+                                                            textAlign: TextAlign.center,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                              Icon(
+                                                                Icons.star,
+                                                                color: Color(0xFFDE9F22),
+                                                                size: 18,
+                                                              ),
+                                                              const SizedBox(width: 5),
+                                                              Text(salons[index].average!),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(height: 5),
+                                                Container(
+                                                    height: 43,
+                                                    decoration: BoxDecoration(
+                                                      color: Theme.of(context).primaryColor,
+                                                      borderRadius: BorderRadius.only(
+                                                        bottomRight: Radius.circular(25),
+                                                        bottomLeft: Radius.circular(25),
+                                                      ),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: [
+                                                        Text('OPEN', style: TextStyle(color: Colors.white)),
+                                                        Icon(
+                                                          LineIcons.arrowRight,
+                                                          color: Colors.white,
+                                                        )
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
                                           ),
                                         ));
                               } else if (snapshot.connectionState == ConnectionState.waiting) {
-                                return Center(
+                                return Container(
+                                  alignment: Alignment.center,
+                                  height: 300,
                                   child: CircularProgressIndicator(),
+                                );
+                              } else if (snapshot.connectionState == ConnectionState.done) {
+                                return Column(
+                                  children: [
+                                    const SizedBox(height: 60),
+                                    Center(
+                                      child: SvgPicture.asset(
+                                        'assets/svg/not_found.svg',
+                                        width: MediaQuery.of(context).size.width / 2,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Salons not found for this Zipcode',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    const SizedBox(height: 40),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: const Text('Error Recieved'),
                                 );
                               } else {
                                 return Center(
@@ -191,7 +330,25 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             },
                           ),
                           Center(
-                            child: Text('Made with <3 for all the fashion people.'),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 30),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Made with '),
+                                    Icon(
+                                      LineIcons.heartAlt,
+                                      size: 20,
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                ),
+                                Text('For all the fashionable people.'),
+                                SizedBox(height: 30)
+                              ],
+                            ),
                           ),
                         ],
                       );

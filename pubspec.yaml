@@ -53,7 +53,12 @@ flutter:
     - assets/hair_girl.png
     - assets/upper_leaf.png
     - assets/lower_leaf.png
+    - assets/smaple_salon_logo.png
     - assets/svg/empty-cart.svg
+    - assets/svg/location-pin.svg
+    - assets/svg/wallet-line.svg
+    - assets/svg/not_found.svg
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -65,13 +70,39 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+  # Signatra
     - family: Signatra
       fonts:
         - asset: fonts/signatra.ttf
-    - family: Nexa
+  # Nexa Demo 
+    - family: NexaBoldDemo
       fonts:
-        - asset: fonts/NexaLight.ttf
-        - asset: fonts/NexaBold.ttf
-          weight: 700
+        - asset: fonts/NexaBoldDemo.ttf
+    - family: NexaLightDemo
+      fonts:
+        - asset: fonts/NexaLightDemo.ttf
+  # Nexa 2012
+    - family: NexaBold
+      fonts:
+        - asset: fonts/NexaBold.otf
+    - family: NexaLight
+      fonts:
+        - asset: fonts/NexaLight.otf
+  # Raleway
+    - family: RalewayBold
+      fonts:
+        - asset: fonts/Raleway-Bold.ttf    
+    - family: RalewayMedium
+      fonts:
+        - asset: fonts/Raleway-Medium.ttf
+    - family: RalewaySemiBold
+      fonts:
+        - asset: fonts/Raleway-SemiBold.ttf 
+    - family: RalewayRegular
+      fonts:
+        - asset: fonts/Raleway-Regular.ttf
+    # - family: NexaLight
+    #   fonts:
+    #     - asset: fonts/NexaLight.otf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
