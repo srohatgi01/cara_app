@@ -5,6 +5,7 @@ import 'package:cara_app/data/models/upperbanner.dart';
 import 'package:cara_app/data/repositories/salons_repo.dart';
 import 'package:cara_app/data/repositories/upper_banner_repo.dart';
 import 'package:cara_app/presentation/salon/salons.dart';
+import 'package:cara_app/presentation/widgets/custom_progress_bar.dart';
 import 'package:cara_app/providers/salon_provider.dart';
 import 'package:cara_app/providers/search_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -31,6 +32,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
     return Scaffold(
       backgroundColor: Color(backgroundColor),
+      // App Bar for the home page consisting of location and coins action button
       appBar: homeAppBar(
         context: context,
         zipCode: userProvider.cuser.zipcode,
@@ -74,6 +76,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       )
                     ],
                   ),
+                  // Search Bar
                   child: TextFormField(
                     decoration: InputDecoration(
                       border: InputBorder.none,
@@ -91,6 +94,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     },
                   ),
                 ),
+                // Search Results
                 StreamBuilder(
                   stream: (Provider.of<SearchProvider>(context).getKeyword != null &&
                           Provider.of<SearchProvider>(context).getKeyword.length != 0)
@@ -104,6 +108,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
                       return ListView.builder(
                         shrinkWrap: true,
+                        physics: PageScrollPhysics(),
                         itemCount: searchResults.length,
                         itemBuilder: (context, index) => GestureDetector(
                           onTap: () {
@@ -119,16 +124,44 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               ),
                             );
                           },
-                          child: ListTile(
-                            title: Text(searchResults[index].salonName!),
-                            subtitle: Text(searchResults[index].salonType!),
+                          // Single Search Result
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(blurRadius: 4, color: Colors.grey.shade300, offset: Offset(0, 4)),
+                                  ],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: ListTile(
+                                  leading: searchResults[index].logo != null
+                                      ? Image.network(searchResults[index].logo!)
+                                      : Image.asset('assets/smaple_salon_logo.png'),
+                                  title: Text(searchResults[index].salonName!),
+                                  subtitle: Text(searchResults[index].addressLineOne!),
+                                  trailing: Text(
+                                    searchResults[index].salonType!,
+                                    style: TextStyle(color: Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       );
-                    } else if (snapshot.connectionState == ConnectionState.waiting &&
+                    }
+                    // Progress indicator
+                    else if (snapshot.connectionState == ConnectionState.waiting &&
                         Provider.of<SearchProvider>(context).getKeyword.length != 0) {
-                      return Center(
-                        child: CircularProgressIndicator(),
+                      return CustomProgressIndicator(
+                        text: 'searching...',
+                        marginTop: 60,
+                        marginBottom: 15,
                       );
                     } else {
                       return Column(
@@ -205,7 +238,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: salons.length,
                                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2, childAspectRatio: .86),
+                                      crossAxisCount: 2,
+                                      childAspectRatio: .86,
+                                    ),
                                     itemBuilder: (context, index) => GestureDetector(
                                           onTap: () {
                                             Provider.of<SalonProvider>(

@@ -39,6 +39,9 @@ AppBar homeAppBar({
       //   onPressed: () => {},
       // )
       GestureDetector(
+        onTap: () {
+          userCoinsFunc(context);
+        },
         child: Container(
           margin: EdgeInsets.only(right: 16, top: 6),
           child: SvgPicture.asset(
@@ -89,6 +92,32 @@ Future<dynamic> zipCodeFunc(BuildContext context, TextEditingController _control
               Provider.of<UserProvider>(context, listen: false).updateZipCode(zipCode: _controller.value.text);
             },
             child: Text('Sumbit'),
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Future<dynamic> userCoinsFunc(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: Icon(
+        Icons.construction_outlined,
+        color: Theme.of(context).primaryColor,
+        size: 80,
+      ),
+      children: [
+        SimpleDialogOption(
+          child: Container(alignment: Alignment.center, child: Text('Coming soon')),
+        ),
+        SimpleDialogOption(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Go Back'),
           ),
         )
       ],
