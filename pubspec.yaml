@@ -58,8 +58,8 @@ flutter:
     - assets/svg/location-pin.svg
     - assets/svg/wallet-line.svg
     - assets/svg/not_found.svg
-    - assets/chairs/chair_outlined.png
-    - assets/chairs/chair_filled.png
+    - assets/chairs/chair_outlined.svg
+    - assets/chairs/chair_filled.svg
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

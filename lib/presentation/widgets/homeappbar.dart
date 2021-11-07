@@ -1,4 +1,5 @@
 import 'package:cara_app/constants/colors.dart';
+import 'package:cara_app/data/repositories/user_repo.dart';
 import 'package:cara_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,13 +32,6 @@ AppBar homeAppBar({
       ),
     ),
     actions: [
-      // IconButton(
-      //   icon: Icon(
-      //     LineIcons.coins,
-      //     color: Theme.of(context).primaryColor,
-      //   ),
-      //   onPressed: () => {},
-      // )
       GestureDetector(
         onTap: () {
           userCoinsFunc(context);
@@ -89,6 +83,13 @@ Future<dynamic> zipCodeFunc(BuildContext context, TextEditingController _control
           child: ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
+
+              // API call for patch request to update the zipcode
+              UserRepository().updateZipCode(
+                emailAddress: Provider.of<UserProvider>(context, listen: false).cuser.emailAddress,
+                zipCode: _controller.value.text,
+              );
+
               Provider.of<UserProvider>(context, listen: false).updateZipCode(zipCode: _controller.value.text);
             },
             child: Text('Sumbit'),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cara_app/data/models/appointment/appointment_history.dart';
 import 'package:cara_app/data/models/appointment/bookappointment.dart';
+import 'package:cara_app/data/models/appointment/update_appointment.dart';
 import 'package:cara_app/data/models/salon/service.dart';
 import 'package:cara_app/data/models/slot.dart';
 import 'package:cara_app/data/provider/appointment.dart';
@@ -74,5 +75,11 @@ class AppointmentRepo {
 
       return appointments;
     }
+  }
+
+  updateAppointmentStatus({required String appointmentId}) async {
+    String body = UpdateAppointmentStatus(appointmentStatus: 'CANCELED_BY_USER').toRawJson();
+
+    await _appointmentApi.updateAppointmentStatus(appointmentId: appointmentId, body: body);
   }
 }

@@ -53,4 +53,17 @@ class AppointmentApi {
       print(e);
     }
   }
+
+  updateAppointmentStatus({required String appointmentId, required var body}) async {
+    try {
+      var response =
+          await http.patch(Uri.parse(updateAppointmentStatusUrl + appointmentId), body: body, headers: headers);
+
+      if (response.statusCode == 204) {
+        print('appointment canceled successfully');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

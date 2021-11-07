@@ -58,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
                 GButton(
                   icon: LineIcons.shoppingCart,
-                  text: 'Orders',
+                  text: 'History',
                 ),
                 GButton(
                   icon: Icons.person_outline,

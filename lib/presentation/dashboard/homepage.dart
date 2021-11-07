@@ -181,17 +181,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   itemCount: banners.length,
                                   itemBuilder: (context, index, ind) => GestureDetector(
                                     onTap: () {
-                                      Provider.of<SalonProvider>(
-                                        context,
-                                        listen: false,
-                                      ).setSalonId = banners[index].salonId;
+                                      if (banners[index].bannerPositionNumber != null) {
+                                        Provider.of<SalonProvider>(
+                                          context,
+                                          listen: false,
+                                        ).setSalonId = banners[index].salonId;
 
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SalonScreen(),
-                                        ),
-                                      );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => SalonScreen(),
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(16),

@@ -1,6 +1,7 @@
 import 'package:cara_app/data/config/prefs.dart';
 import 'package:cara_app/data/models/carauser.dart';
 import 'package:cara_app/data/models/guser.dart';
+import 'package:cara_app/data/models/update_zipcode.dart';
 import 'package:cara_app/data/provider/auth/auth.dart';
 import 'package:cara_app/data/provider/user_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,6 +44,12 @@ class UserRepository {
     await prefs.saveUserDetails(cuser: user);
 
     return user;
+  }
+
+  updateZipCode({required String emailAddress, required String zipCode}) async {
+    String body = UpdateZipCode(zipcode: zipCode).toRawJson();
+
+    await UserApi().updateZipCode(emailAddress: emailAddress, body: body);
   }
 
   getUser() async {

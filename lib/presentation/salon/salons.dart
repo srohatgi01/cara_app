@@ -10,6 +10,7 @@ import 'package:cara_app/providers/slot_provider.dart';
 import 'package:cara_app/providers/user_provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -134,14 +135,23 @@ class _SalonScreenState extends State<SalonScreen> {
                             ),
                             Container(
                               alignment: Alignment.centerLeft,
-                              height: 50,
+                              padding: const EdgeInsets.only(left: 16.0),
+                              height: 60,
                               child: ListView.builder(
                                 itemCount: salon.numberOfChairs!,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) =>
-                                    Image.asset('assets/chairs/chair_filled.png', height: 30),
+                                itemBuilder: (context, index) => Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: SvgPicture.asset(
+                                    'assets/chairs/chair_filled.svg',
+                                    width: 50,
+                                    alignment: Alignment.center,
+                                    allowDrawingOutsideViewBox: true,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -216,7 +226,10 @@ class _SalonScreenState extends State<SalonScreen> {
                                       ),
                                       trailing: Provider.of<SalonProvider>(context).doesContain(
                                               service: salon.categories![categoriesIndex].services![servicesIndex])
-                                          ? Icon(Icons.remove)
+                                          ? Icon(
+                                              Icons.remove,
+                                              color: Colors.red,
+                                            )
                                           : Icon(Icons.add),
                                     ),
                                   ),
