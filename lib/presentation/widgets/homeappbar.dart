@@ -84,11 +84,13 @@ Future<dynamic> zipCodeFunc(BuildContext context, TextEditingController _control
             onPressed: () {
               Navigator.pop(context);
 
-              // API call for patch request to update the zipcode
-              UserRepository().updateZipCode(
-                emailAddress: Provider.of<UserProvider>(context, listen: false).cuser.emailAddress,
-                zipCode: _controller.value.text,
-              );
+              // API call for patch request to update the zipcode only if the user is signed in
+              if (Provider.of<UserProvider>(context, listen: false).isSignedIn == true) {
+                UserRepository().updateZipCode(
+                  emailAddress: Provider.of<UserProvider>(context, listen: false).cuser.emailAddress,
+                  zipCode: _controller.value.text,
+                );
+              }
 
               Provider.of<UserProvider>(context, listen: false).updateZipCode(zipCode: _controller.value.text);
             },

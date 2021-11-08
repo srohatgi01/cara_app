@@ -461,7 +461,7 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 70)
+            SizedBox(height: 65)
           ],
         ),
       ),
@@ -479,7 +479,7 @@ class _CartScreenState extends State<CartScreen> {
               ],
             ),
             margin: EdgeInsets.all(0),
-            height: 70,
+            height: 65,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
